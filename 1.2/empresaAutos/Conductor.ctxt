@@ -1,0 +1,16 @@
+#BlueJ class context
+#Fri Aug 28 01:01:16 CLT 2026
+comment0.target=Conductor
+comment1.params=nombre rut licencia
+comment1.target=Conductor(java.lang.String, java.lang.String, java.lang.String)
+comment2.target=java.lang.String getNombre()
+comment3.target=java.lang.String getRut()
+comment4.target=java.lang.String getLicencia()
+comment5.params=nuevoNombre
+comment5.target=void setNombre(java.lang.String)
+comment6.params=nuevoRut
+comment6.target=void setRut(java.lang.String)
+comment7.params=nuevaLicencia
+comment7.target=void setLicencia(java.lang.String)
+comment8.target=void mostrarCredenciales()
+numComments=9

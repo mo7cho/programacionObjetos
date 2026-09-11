@@ -1,0 +1,24 @@
+#BlueJ class context
+#Fri Aug 28 01:01:16 CLT 2026
+comment0.target=VehiculoCarga
+comment1.params=patente capacidadMaxima km
+comment1.target=VehiculoCarga(java.lang.String, double, double)
+comment10.params=peso
+comment10.target=void cargar(double)
+comment11.params=peso
+comment11.target=void descargar(double)
+comment12.params=distancia
+comment12.target=void avanzar(double)
+comment2.target=java.lang.String getPatente()
+comment3.target=double getCapacidadMaxima()
+comment4.target=double getCargaActual()
+comment5.target=double getKm()
+comment6.params=patente
+comment6.target=void setPatente(java.lang.String)
+comment7.params=capacidadMaxima
+comment7.target=void setCapacidadMaxima(double)
+comment8.params=cargaActual
+comment8.target=void setCargaActual(double)
+comment9.params=km
+comment9.target=void setKm(double)
+numComments=13

@@ -1,0 +1,29 @@
+#BlueJ class context
+#Fri Aug 28 01:01:16 CLT 2026
+comment0.target=Auto
+comment1.params=modelo marca color anio km tipo
+comment1.target=Auto(java.lang.String, java.lang.String, java.lang.String, int, double, java.lang.String)
+comment10.params=nuevoColor
+comment10.target=void setColor(java.lang.String)
+comment11.params=nuevoAnio
+comment11.target=void setAnio(int)
+comment12.params=nuevoKm
+comment12.target=void setKm(double)
+comment13.params=nuevoTipo
+comment13.target=void setTipo(java.lang.String)
+comment14.params=distancia
+comment14.target=void avanzar(double)
+comment15.params=distancia
+comment15.target=void retroceder(double)
+comment16.target=void detenerReportarEstado()
+comment2.target=java.lang.String getModelo()
+comment3.target=java.lang.String getMarca()
+comment4.target=java.lang.String getColor()
+comment5.target=int getAnio()
+comment6.target=double getKm()
+comment7.target=java.lang.String getTipo()
+comment8.params=nuevoModelo
+comment8.target=void setModelo(java.lang.String)
+comment9.params=nuevaMarca
+comment9.target=void setMarca(java.lang.String)
+numComments=17

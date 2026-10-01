@@ -9,13 +9,14 @@ package oyarce.mavenproject1;
  * @author pv-alumno
  */
 public abstract class Producto {
+
     private String nombre = "";
     private int garantiaMeses = 0;
     private String categoria = "";
     private int anioFabricacion;
     private boolean esElectrico = false;
     private double calificacionCliente = 0.0;
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -72,7 +73,17 @@ public abstract class Producto {
         }
         this.calificacionCliente = calificacionCliente;
     }
-    
+
     public abstract double calcularPrecioVentaFinal();
-    
+
+    @Override
+    public String toString() {
+        return "Nombre: '" + nombre + '\'' +
+               " | Categoría: " + categoria +
+               " | Garantía: " + garantiaMeses + " meses" +
+               " | Año Fab: " + anioFabricacion +
+               " | Eléctrico: " + (esElectrico ? "Sí" : "No") +
+               " | Calificación: " + calificacionCliente + "/10" +
+               " | Precio Venta Final: $" + String.format("%.0f", calcularPrecioVentaFinal());
+    }
 }

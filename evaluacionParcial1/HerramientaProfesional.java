@@ -31,12 +31,23 @@ public class HerramientaProfesional extends Producto implements ISoporteTecnico 
 
     @Override
     public double calcularPrecioVentaFinal() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        double precioBase = 50000.0;
+        if ("Industrial".equalsIgnoreCase(nivelCertificacion)) {
+            return precioBase + 20000.0;
+        } else if ("Comercial".equalsIgnoreCase(nivelCertificacion)) {
+            return precioBase + 10000.0;
+        }
+        return precioBase;
     }
 
     @Override
     public void mostrarGuiaDeUsoSeguro() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("  ↳ [GUÍA DE SEGURIDAD]: Usar EPP completo (gafas, guantes), verificar aislamiento eléctrico y operar según certificación " + nivelCertificacion.toUpperCase() + ".");
+    }
+
+    @Override
+    public String toString() {
+        return "[Tipo: Profesional | Certificación: " + nivelCertificacion + "] " + super.toString();
     }
 
 }

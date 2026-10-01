@@ -8,7 +8,7 @@ package oyarce.mavenproject1;
  *
  * @author pv-alumno
  */
-public class ArticuloEstandar extends Producto implements ISoporteTecnico{
+public class ArticuloEstandar extends Producto{
 
     public ArticuloEstandar(String nombre, int garantiaMeses, String categoria, int anioFabricacion, boolean esElectrico, double calificacionCliente) {
         setNombre(nombre);
@@ -21,12 +21,12 @@ public class ArticuloEstandar extends Producto implements ISoporteTecnico{
 
     @Override
     public double calcularPrecioVentaFinal() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 25000.0;
     }
 
     @Override
-    public void mostrarGuiaDeUsoSeguro() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String toString() {
+        return "[Tipo: Estándar] " + super.toString();
     }
     
 }

@@ -26,15 +26,24 @@ public class Mavenproject1 {
                 System.out.println("2. Eliminar producto por nombre");
                 System.out.println("3. Buscar producto por nombre");
                 System.out.println("4. Listar todos los productos");
-                System.out.println("5. Cambiar nombre, garantía y propiedad eléctrica del producto");
+                System.out.println("5. Cambiar nombre, garantía y propiedad eléctrica del producto (BONIFICACIÓN)");
                 System.out.println("6. Salir");
 
                 int op = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese una opción: ");
 
                 switch (op) {
                     case 1 -> {
-                        // 1. Solicitar el nombre y validar duplicados
-                        String nombre = UtilidadesFerreteria.solicitarTexto("Ingrese el nombre del producto: ");
+                        System.out.println("\nSeleccione el tipo de producto a ingresar:");
+                        System.out.println("1. Profesional");
+                        System.out.println("2. Liquidación");
+                        System.out.println("3. Estándar");
+                        int tipo = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el tipo de producto:");
+
+                        if (tipo < 1 || tipo > 3) {
+                            throw new Exception("Tipo de producto inválido. Debe ser 1, 2 o 3.");
+                        }
+
+                        String nombre = UtilidadesFerreteria.solicitarTexto("Ingrese el nombre del producto:");
 
                         boolean existe = false;
                         for (Producto p : inventario) {
@@ -49,13 +58,10 @@ public class Mavenproject1 {
                             break;
                         }
 
-                        // 2. Meses de garantía
-                        int garantia = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese los meses de garantía: ");
+                        int garantia = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese los meses de garantía (mayor a 0):");
 
-                        // 3. Selección de categoría desde el diccionario
                         Map<Integer, String> categorias = UtilidadesFerreteria.obtenerDiccionarioCategorias();
                         UtilidadesFerreteria.mostrarMensaje("Seleccione la categoría:");
-
                         for (Map.Entry<Integer, String> entry : categorias.entrySet()) {
                             System.out.println(entry.getKey() + ". " + entry.getValue());
                         }
@@ -65,49 +71,44 @@ public class Mavenproject1 {
                         if (!categorias.containsKey(opcionCategoria)) {
                             throw new Exception("Opción de categoría inválida.");
                         }
-
                         String categoriaSeleccionada = categorias.get(opcionCategoria);
 
-                        // 4. Datos comunes restantes
-                        int anio = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el año de fabricación: ");
-                        boolean electrico = UtilidadesFerreteria.solicitarBooleano("Indique si el producto es eléctrico");
-                        double calificacion = UtilidadesFerreteria.solicitarNumeroDecimal("Ingrese una calificación de 0 a 10: ");
+                        boolean esElectrico = UtilidadesFerreteria.solicitarBooleano("Indique si el producto requiere electricidad");
+                        double calificacion = UtilidadesFerreteria.solicitarNumeroDecimal("Ingrese una calificación del cliente (0 a 10):");
 
-                        // 5. Selección del tipo de producto e instanciación
-                        System.out.println("1. Profesional");
-                        System.out.println("2. Liquidación");
-                        System.out.println("3. Estándar");
-                        int tipo = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el tipo de producto:");
-
-                        Producto articulo = null;
+                        Producto nuevoProducto = null;
 
                         switch (tipo) {
                             case 1 -> {
+                                int anioFabricacion = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el año de fabricación:");
+                                
+                                System.out.println("Nivel de certificación:");
                                 System.out.println("1. Industrial");
                                 System.out.println("2. Comercial");
                                 int opcionCert = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el nivel de certificación:");
 
-                                String certificacion;
-                            switch (opcionCert) {
-                                case 1 -> certificacion = "Industrial";
-                                case 2 -> certificacion = "Comercial";
-                                default -> throw new Exception("Opción de certificación inválida.");
-                            }
+                                String certificacion = switch (opcionCert) {
+                                    case 1 -> "Industrial";
+                                    case 2 -> "Comercial";
+                                    default -> throw new Exception("Opción de certificación inválida.");
+                                };
 
-                                articulo = new HerramientaProfesional(nombre, garantia, categoriaSeleccionada, anio, electrico, calificacion, certificacion);
+                                nuevoProducto = new HerramientaProfesional(nombre, garantia, categoriaSeleccionada, anioFabricacion, esElectrico, calificacion, certificacion);
                             }
                             case 2 -> {
-                                int anioOriginal = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el año del lote original: ");
-                                articulo = new ProductoLiquidacion(nombre, garantia, categoriaSeleccionada, anio, electrico, calificacion, anioOriginal);
+                                int anioLoteOriginal = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el año del lote original:");
+                                
+                                nuevoProducto = new ProductoLiquidacion(nombre, garantia, categoriaSeleccionada, esElectrico, calificacion, anioLoteOriginal);
                             }
                             case 3 -> {
-                                articulo = new ArticuloEstandar(nombre, garantia, categoriaSeleccionada, anio, electrico, calificacion);
+                                int anioFabricacion = UtilidadesFerreteria.solicitarNumeroEntero("Ingrese el año de fabricación:");
+                                
+                                nuevoProducto = new ArticuloEstandar(nombre, garantia, categoriaSeleccionada, anioFabricacion, esElectrico, calificacion);
                             }
-                            default -> throw new Exception("Tipo de producto no válido.");
                         }
 
-                        inventario.add(articulo);
-                        UtilidadesFerreteria.mostrarMensaje("Producto ingresado correctamente.");
+                        inventario.add(nuevoProducto);
+                        UtilidadesFerreteria.mostrarMensaje("Producto agregado exitosamente al inventario.");
                     }
 
                     case 2 -> {
@@ -132,11 +133,11 @@ public class Mavenproject1 {
                             break;
                         }
 
-                        String nombreOriginal = UtilidadesFerreteria.solicitarTexto("Ingrese el nombre del producto a buscar:");
+                        String nombreBuscar = UtilidadesFerreteria.solicitarTexto("Ingrese el nombre del producto a buscar:");
                         Producto productoEncontrado = null;
 
                         for (Producto p : inventario) {
-                            if (p.getNombre().equalsIgnoreCase(nombreOriginal)) {
+                            if (p.getNombre().equalsIgnoreCase(nombreBuscar)) {
                                 productoEncontrado = p;
                                 break;
                             }
@@ -146,7 +147,6 @@ public class Mavenproject1 {
                             UtilidadesFerreteria.mostrarMensaje("Producto encontrado:");
                             System.out.println(productoEncontrado);
 
-                            // Si posee interfaz de soporte técnico, mostrar guía
                             if (productoEncontrado instanceof ISoporteTecnico soporte) {
                                 soporte.mostrarGuiaDeUsoSeguro();
                             }
@@ -161,13 +161,14 @@ public class Mavenproject1 {
                             break;
                         }
 
-                        System.out.println("\n========== LISTADO DE PRODUCTOS ==========");
+                        System.out.println("\n=========================== LISTADO DE PRODUCTOS ===========================");
                         int totalGarantiaAcumulada = 0;
                         int cantHerramientasProf = 0;
                         Producto productoMayorGarantia = inventario.get(0);
 
                         for (int i = 0; i < inventario.size(); i++) {
                             Producto p = inventario.get(i);
+                            
                             System.out.println((i + 1) + ". " + p);
 
                             totalGarantiaAcumulada += p.getGarantiaMeses();
@@ -181,11 +182,11 @@ public class Mavenproject1 {
                             }
                         }
 
-                        System.out.println("\n--- RESUMEN DEL INVENTARIO ---");
-                        System.out.println("• Total de meses de garantía acumulados: " + totalGarantiaAcumulada + " meses");
-                        System.out.println("• Producto con mayor garantía: " + productoMayorGarantia.getNombre() + " (" + productoMayorGarantia.getGarantiaMeses() + " meses)");
-                        System.out.println("• Cantidad de herramientas profesionales: " + cantHerramientasProf);
-                        System.out.println("==========================================");
+                        System.out.println("\n-------------------------- RESUMEN DEL INVENTARIO --------------------------");
+                        System.out.println("• Total de meses de garantía acumulados : " + totalGarantiaAcumulada + " meses");
+                        System.out.println("• Producto con mayor garantía           : " + productoMayorGarantia.getNombre() + " (" + productoMayorGarantia.getGarantiaMeses() + " meses)");
+                        System.out.println("• Cantidad de herramientas profesionales : " + cantHerramientasProf);
+                        System.out.println("=============================================================================");
                     }
 
                     case 5 -> {

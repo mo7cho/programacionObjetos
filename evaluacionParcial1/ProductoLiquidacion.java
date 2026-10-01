@@ -8,13 +8,12 @@ package oyarce.mavenproject1;
  *
  * @author pv-alumno
  */
-public class ProductoLiquidacion extends Producto implements ISoporteTecnico{
+public class ProductoLiquidacion extends Producto{
 
-    public ProductoLiquidacion(String nombre, int garantiaMeses, String categoria, int anioFabricacion, boolean esElectrico, double calificacionCliente, int anioOriginal) {
+    public ProductoLiquidacion(String nombre, int garantiaMeses, String categoria, boolean esElectrico, double calificacionCliente, int anioOriginal) {
         setNombre(nombre);
         setGarantiaMeses(garantiaMeses);
         setCategoria(categoria);
-        setAnioFabricacion(anioFabricacion);
         setEsElectrico(esElectrico);
     }
     
@@ -31,12 +30,12 @@ public class ProductoLiquidacion extends Producto implements ISoporteTecnico{
     
     @Override
     public double calcularPrecioVentaFinal() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 15000.0;
     }
 
     @Override
-    public void mostrarGuiaDeUsoSeguro() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String toString() {
+        return "[Tipo: Liquidación | Lote Original: " + anioLoteOriginal + "] " + super.toString();
     }
     
 }

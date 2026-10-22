@@ -11,13 +11,21 @@ public class UsuariosModel {
         return usuarios;
     }
 
-    public void agregarUsuarios() {
+    public void agregarUsuarios(UsuarioDto usuario) {
         usuarios.add(usuario);
     }
 
-    public void eliminarUsuarios() {
+    public void eliminarUsuarios(UsuarioDto usuario) {
         usuarios.remove(usuario);
     }
 
+    public void actualizarUsuario(UsuarioDto usuario) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getId().equals(usuario.getId())) {
+                usuarios.set(i, usuario);
+                break;
+            }
+        }
+    }
 
 }

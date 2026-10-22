@@ -6,11 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+
 
 public class UsuariosController {
     UsuarioDto usuarioEliminar;
@@ -47,6 +46,9 @@ public class UsuariosController {
     @FXML
     public Button btnEliminar;
 
+    @FXML
+    public Button btnModificar;
+
     private UsuariosModel usuariosModel;
     private ObservableList<UsuarioDto> usuarios;
 
@@ -54,7 +56,7 @@ public class UsuariosController {
         this.usuariosModel = new UsuariosModel();
     }
 
-    private Integer idUsuarios = 0;
+    private Integer idUsuario = 0;
 
     @FXML
     public void initialize() {
@@ -75,8 +77,100 @@ public class UsuariosController {
             usuarioDto.setNombre(txtNombre.getText());
             usuarioDto.setContrasena(txtContrasena.getText());
             usuarioDto.setCorreo(txtCorreo.getText());
-            usuarioDto.setTelefono(txtTelefono.getText());
+            usuarioDto.setTelefono(Integer.valueOf(txtTelefono.getText()));
+
+            if (txtNombre.getText().trim().isEmpty() || txtContrasena.getText().trim().isEmpty() || txtCorreo.getText().trim().isEmpty() || txtTelefono.getText().trim().isEmpty()) {
+                throw new Exception("Datos no pueden estar vacio");
+            }
+
+            usuarioDto.setId(this.getIdUsuario());
+
+            this.txtNombre.setText("");
+            this.txtContrasena.setText("");
+            this.txtCorreo.setText("");
+            this.txtTelefono.setText("");
+
+            this.txtNombre.requestFocus();
+
+            System.out.println("Agregando usuario");
+
+            System.out.println(usuarioDto);
+            this.usuariosModel.agregarUsuarios(usuarioDto);
+            this.usuarios.setAll(this.usuariosModel.getUsuario());
+
+            System.out.println(this.usuariosModel.getUsuario().size());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
+    private Integer getIdUsuario() {
+        this.idUsuario = this.idUsuario + 1;
+        return idUsuario;
+    }
+
+    @FXML
+    public void handleSeleccionar(MouseEvent mouseEvent) {
+        UsuarioDto usuarioDto = (UsuarioDto) this.tableUsuarios.getSelectionModel().getSelectedItem();
+        if (usuarioDto != null) {
+            this.txtId.setText(usuarioDto.getId().toString());
+            this.btnEliminar.setDisable(false);
+            this.btnModificar.setDisable(false);
+            this.usuarioEliminar = usuarioDto;
+
+        }
+    }
+
+    @FXML
+    public void handleEliminarUsuario(ActionEvent actionEvent) {
+        this.usuariosModel.eliminarUsuarios(this.usuarioEliminar);
+        this.usuarios.setAll(this.usuariosModel.getUsuario());
+        this.usuarioEliminar = null;
+    }
+
+    @FXML
+    public void handleModificarUsuario(ActionEvent actionEvent) {
+        try {
+            if (txtNombre.getText().trim().isEmpty() || txtContrasena.getText().trim().isEmpty() || txtCorreo.getText().trim().isEmpty() || txtTelefono.getText().trim().isEmpty()) {
+                throw new Exception("Los datos no pueden estar vacíos.");
+            }
+
+            this.usuarioEliminar.setNombre(txtNombre.getText());
+            this.usuarioEliminar.setContrasena(txtContrasena.getText());
+            this.usuarioEliminar.setCorreo(txtCorreo.getText());
+            this.usuarioEliminar.setTelefono(Integer.valueOf(txtTelefono.getText()));
+
+            this.usuariosModel.actualizarUsuario(this.usuarioEliminar);
+
+            this.usuarios.setAll(this.usuariosModel.getUsuario());
+
+            this.txtNombre.setText("");
+            this.txtContrasena.setText("");
+            this.txtCorreo.setText("");
+            this.txtTelefono.setText("");
+
+            this.txtNombre.requestFocus();
+
+
+            this.usuarioEliminar = null;
+            this.btnEliminar.setDisable(true);
+            this.btnModificar.setDisable(true);
+            this.txtNombre.requestFocus();
+
+            System.out.println("Usuario modificado con éxito");
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No se pudo modificar");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
 }
+
+

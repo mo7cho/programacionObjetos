@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="200.0" prefWidth="516.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.damian.estudiantes.controller.EstudiantesController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <HBox spacing="10.0">
+       <TextField fx:id="txtId" promptText="Id" />
+       <TextField fx:id="txtNombre" promptText="Nombre" />
+       <TextField fx:id="txtCorreo" promptText="Correo" />
+       <TextField fx:id="txtEdad" promptText="Edad" />
+      <Button onMouseClicked="#handleCrear" mnemonicParsing="false" text="Agregar"  />
+   </HBox>
+    <TableView fx:id="tableEstudiantes" onMouseClicked="#handleSeleccionado" >
+        <columns>
+            <TableColumn fx:id="colId" prefWidth="75.0" text="Id" />
+            <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="colCorreo" prefWidth="75.0" text="Correo" />
+            <TableColumn fx:id="colEdad" prefWidth="75.0" text="Edad" />
+        </columns>
+    </TableView>
+</VBox>
